@@ -38,6 +38,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = (0, auth_1.createJwtToken)(result);
     res.cookie("token", token);
     console.log(token);
-    res.redirect("/voter");
+    // res.redirect("/voter");
+    res.send("Not admin");
 }));
 exports.default = router;

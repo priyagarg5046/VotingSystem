@@ -18,10 +18,13 @@ const Login = () => {
     console.log(response.data);
     if(response.data.trim()==="admin"){
       navigate("/admin");
+    }else{
+      navigate("/vote")
     }
-    // else{
+    // if(response.data.trim()!=="admin"){
     //   navigate("/vote");
     // }
+   
     setUsername("");
     setPassword("");
   }

@@ -17,6 +17,7 @@ router.post("/", async (req, res) => {
     })
     if (!result) {
         throw new Error("Not valid username")
+        
     }
     if (result.password != password) {
         throw new Error("Not a valid password");
@@ -24,6 +25,7 @@ router.post("/", async (req, res) => {
     const token = createJwtToken(result);
     res.cookie("token", token)
     console.log(token);
-    res.redirect("/voter");
+    // res.redirect("/voter");
+    res.send("Not admin")
 })
 export default router;
