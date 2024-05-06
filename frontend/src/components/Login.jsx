@@ -16,14 +16,12 @@ const Login = () => {
       password:password,
     })
     console.log(response.data);
-    if(response.data.trim()==="admin"){
+    localStorage.setItem("token",response.data.token);
+    if(response.data==="admin"){
       navigate("/admin");
     }else{
-      navigate("/vote")
+      navigate("/vote");
     }
-    // if(response.data.trim()!=="admin"){
-    //   navigate("/vote");
-    // }
    
     setUsername("");
     setPassword("");

@@ -17,17 +17,24 @@ export const createJwtToken = (user: {
     return jwt.sign(userWithDateString, secretKey, { expiresIn: "24h" });
 }
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    let token = req.cookies.token;
-    if (!token) {
+    // Extract token from Authorization header
+    const tokenHeader = req.headers['authorization'];
+    if (!tokenHeader) {
         return res.status(401).json({ message: "Unauthorized: Missing token" });
     }
-    let decode = jwt.verify(token, secretKey);
-    console.log(decode);
-    if (decode) {
-        req.user = decode;
-        return next();
-    }
-    res.send("token invalid")
 
-}
+    const token = tokenHeader.split(' ')[1]; // Extract token and trim whitespace
+
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        // console.log(decoded);
+        req.user = decoded;
+        next(); // Proceed to the next middleware
+    } catch (error) {
+        // Handle token verification errors
+        console.error("Token verification error:", error);
+        return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    }
+};
+
 

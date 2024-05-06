@@ -6,9 +6,7 @@ import adminRoute from "./routes/admin";
 import loginRoute from "./routes/login";
 import voterRoute from "./routes/voter";
 import votingRoute from "./routes/voting";
-
 const app = express();
-
 const prisma = new PrismaClient();
 const PORT = 4444;
 app.use(CORS());

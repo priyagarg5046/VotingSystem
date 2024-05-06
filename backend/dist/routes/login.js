@@ -20,7 +20,7 @@ const prisma = new client_1.PrismaClient();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     if (username === "admin" && password === "admin") {
-        return res.send("admin ");
+        return res.send("admin");
         // return res.redirect("/admin");
     }
     const result = yield prisma.voter.findUnique({
@@ -37,8 +37,9 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const token = (0, auth_1.createJwtToken)(result);
     res.cookie("token", token);
-    console.log(token);
-    // res.redirect("/voter");
-    res.send("Not admin");
+    // console.log(token);
+    // es.redirect("/voter");
+    // localStorage.setItem("token", token);
+    res.send({ token });
 }));
 exports.default = router;

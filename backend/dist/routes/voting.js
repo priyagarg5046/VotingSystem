@@ -18,17 +18,21 @@ const client_1 = require("@prisma/client");
 const auth_1 = require("../utils/auth");
 const prisma = new client_1.PrismaClient();
 router.get("/", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.user.isvoted) {
+        return res.send("already voted");
+    }
     let data = yield prisma.candidate.findMany({
         orderBy: { fullName: 'asc' }
     });
-    res.send({ data });
+    console.log(data);
+    res.send(data);
 }));
-exports.default = router;
 router.post("/", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const candidateId = req.body;
+    const { candidateId } = req.body;
+    console.log(candidateId.candidateId);
     yield prisma.candidate.update({
         where: {
-            id: candidateId,
+            id: Number(candidateId),
         },
         data: {
             totalvotes: { increment: 1 }
@@ -44,7 +48,9 @@ router.post("/", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, voi
         where: { id: req.user.id }, // Assuming you have user information in the request
         data: { isvoted: true }
     });
-    res.redirect("/voting/success?candidateId=" + candidateId);
+    req.user.isvoted = true;
+    res.send("voting done");
+    // res.redirect("/voting/success?candidateId=" + candidateId);
 }));
 router.get("/success", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -61,3 +67,4 @@ router.get("/success", (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).send("Internal Server Error");
     }
 }));
+exports.default = router;

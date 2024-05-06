@@ -13,16 +13,22 @@ const createJwtToken = (user) => {
 };
 exports.createJwtToken = createJwtToken;
 const verifyToken = (req, res, next) => {
-    let token = req.cookies.token;
-    if (!token) {
+    // Extract token from Authorization header
+    const tokenHeader = req.headers['authorization'];
+    if (!tokenHeader) {
         return res.status(401).json({ message: "Unauthorized: Missing token" });
     }
-    let decode = jsonwebtoken_1.default.verify(token, secretKey);
-    console.log(decode);
-    if (decode) {
-        req.user = decode;
-        return next();
+    const token = tokenHeader.split(' ')[1]; // Extract token and trim whitespace
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, secretKey);
+        // console.log(decoded);
+        req.user = decoded;
+        next(); // Proceed to the next middleware
     }
-    res.send("token invalid");
+    catch (error) {
+        // Handle token verification errors
+        console.error("Token verification error:", error);
+        return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    }
 };
 exports.verifyToken = verifyToken;

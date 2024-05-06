@@ -5,18 +5,23 @@ import { verifyToken } from "../utils/auth";
 const prisma = new PrismaClient();
 
 router.get("/",verifyToken, async (req, res) => {
+    if(req.user.isvoted){
+        return res.send("already voted");
+    }
     let data = await prisma.candidate.findMany({
         orderBy: { fullName: 'asc' }
     });
-    res.send({ data });
+    console.log(data);
+    res.send(data);
 })
-export default router;
+
 
 router.post("/",verifyToken, async (req, res) => {
-    const candidateId = req.body;
+    const {candidateId} = req.body;
+    console.log(candidateId.candidateId);
     await prisma.candidate.update({
         where: {
-            id: candidateId,
+            id: Number(candidateId),
         },
         data: {
             totalvotes: { increment: 1 }
@@ -32,7 +37,9 @@ router.post("/",verifyToken, async (req, res) => {
         where: { id: req.user.id }, // Assuming you have user information in the request
         data: { isvoted: true }
     });
-    res.redirect("/voting/success?candidateId=" + candidateId);
+    req.user.isvoted=true;
+    res.send("voting done");
+    // res.redirect("/voting/success?candidateId=" + candidateId);
 
 })
 router.get("/success", async (req, res) => {
@@ -50,3 +57,4 @@ router.get("/success", async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+export default router;
