@@ -1,13 +1,14 @@
 import React  from 'react';
 import LeftSidebar from './LeftSidebar';
-import AdminDash from './AdminDash';
+import { Outlet } from 'react-router-dom';
+
 
 const Admin = () => {
 
   return (
     <div className='flex '>
-    <LeftSidebar/>
-    <AdminDash/>
+     <LeftSidebar />
+     <Outlet/>
      </div>
   );
 };

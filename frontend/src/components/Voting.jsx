@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ColorRing } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
+import VoterCard from './VoterCard';
 const VotingComponent = () => {
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -72,7 +73,7 @@ const VotingComponent = () => {
   };
   return (
     <>
-   
+    {/* <VoterCard/> */}
       <div className=" min-h-screen w-full bg-cover bg-center" style={{ backgroundImage: `url(${"https://th.bing.com/th/id/OIP.swg6Duio_-fRxXzVQFFtBAHaFj?rs=1&pid=ImgDetMain"})` }}>
       <h2 className="font-extrabold flex justify-center pt-6">Please Vote.Your Vote Matters!!</h2>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRef } from 'react';
 import {ColorRing} from 'react-loader-spinner';
 import { Outlet } from 'react-router-dom';
+import LeftSidebar from './LeftSidebar';
 
 const AddCandidate = () => {
   const [loading,setLoading]=useState(false);
@@ -50,6 +51,7 @@ const AddCandidate = () => {
  
   }
   return (
+    <div className='w-[80%] min-h-screen'>
     <div className="bg-gray-100 min-h-screen w-full bg-cover bg-center" style={{ backgroundImage: `url(${"https://wallpapercave.com/wp/wp2488777.jpg"})` }}>
       <div className="container mx-auto py-7">
         
@@ -130,6 +132,7 @@ const AddCandidate = () => {
       </form>
       </div>
       <Outlet/>
+    </div>
     </div>
   );
 };

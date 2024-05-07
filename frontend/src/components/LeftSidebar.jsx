@@ -16,7 +16,7 @@ const LeftSidebar = () => {
                         <div>
                             <IoHome size={"24px"} />
                         </div>
-                        <h1 className='font-bold text-lg ml-2'>Home</h1>
+                        <h1 className='font-bold text-lg ml-2'><Link to="home">Home</Link></h1>
                     </div>
                     <div className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                         <div>
@@ -34,7 +34,7 @@ const LeftSidebar = () => {
                         <div>
                             <RiLogoutCircleRLine size={"24px"} />
                         </div>
-                        <h1 className='font-bold text-lg ml-2'>Logout</h1>
+                        <h1 className='font-bold text-lg ml-2'><Link to="/login">Logout</Link></h1>
                     </div>
                     {/* <button className='px-4 py-2 border-none text-md bg-[#1D9BF0] rounded-full text-white w-full font-bold'>Post</button> */}
                 </div>

@@ -64,7 +64,7 @@ const ChartComponent = () => {
   };
 
   return (
-    <div className='flex min-h-screen'>
+    <div className='min-h-screen w-[90%] my-10'>
       <Bar data={chartData} options={options} />
     </div>
   );

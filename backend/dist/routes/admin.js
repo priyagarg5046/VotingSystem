@@ -63,27 +63,33 @@ router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    let candidate = prisma.candidate.findUnique({
-        where: { id: Number(id) },
-        include: {
-            votes: true,
-        }
-    });
-    if (!candidate) {
-        return res.send("candidate not found");
-    }
-    const totalVotes = candidate.votes.length;
-    const halfTotalVotes = Math.ceil(totalVotes / 2);
-    if (totalVotes < halfTotalVotes) {
-        yield prisma.candidate.delete({
-            where: {
-                id: Number(id),
-            },
+    try {
+        let candidate = yield prisma.candidate.findUnique({
+            where: { id: Number(id) },
+            include: {
+                votes: true,
+            }
         });
-        res.send("Candidate deleted successfully.");
+        if (!candidate) {
+            return res.status(404).send("Candidate not found");
+        }
+        const totalVotes = candidate.votes.length;
+        const halfTotalVotes = Math.ceil(totalVotes / 2);
+        if (totalVotes < halfTotalVotes) {
+            yield prisma.candidate.delete({
+                where: {
+                    id: Number(id),
+                },
+            });
+            return res.send("Candidate deleted successfully.");
+        }
+        else {
+            return res.status(403).send("Cannot delete candidate with more than half of the total votes.");
+        }
     }
-    else {
-        res.status(403).send("Cannot delete candidate with more than half of the total votes.");
+    catch (error) {
+        console.error("Error deleting candidate:", error);
+        return res.status(500).send("Internal Server Error");
     }
 }));
 exports.default = router;

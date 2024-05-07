@@ -2,7 +2,7 @@ import React from 'react'
 
 const Voted = () => {
   return (
-    <div>Already Voted!</div>
+    <div><h1>Already Voted!</h1></div>
   )
 }
 

@@ -7,7 +7,38 @@ import { MdDelete } from "react-icons/md";
 const AdminDash = () => {
   const [loading, setLoading] = useState(true);
   const [candidates, setCandidate] = useState(null);
+  const [error, setError] = useState(null);
+  const [editingCandidateId, setEditingCandidateId] = useState(null);
 
+  async function deleteCandidate(id) {
+    if (window.confirm('Are you sure you want to delete this candidate?')) {
+      try {
+        await axios.delete(`http://localhost:4444/admin/${id}`);
+        // Update candidates after deletion
+      } catch (error) {
+        console.error('Error deleting candidate:', error);
+        setError('Failed to delete candidate. Please try again later.');
+      }
+    }
+  }
+
+  const editCandidate = async (id, updatedCandidate) => {
+    try {
+      await axios.put(`http://localhost:4444/admin/${id}`, updatedCandidate);
+      // Update local state with the edited candidate
+      const updatedCandidates = candidates.map(candidate => {
+        if (candidate.id === id) {
+          return { ...candidate, ...updatedCandidate };
+        }
+        return candidate;
+      });
+      setCandidates(updatedCandidates);
+      setEditingCandidateId(null); // Reset editing state
+    } catch (error) {
+      console.error('Error editing candidate:', error);
+      setError('Failed to edit candidate. Please try again later.');
+    }
+  };
   useEffect(() => {
     async function getData() {
       try {
@@ -15,6 +46,7 @@ const AdminDash = () => {
         setCandidate(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError('Failed to fetch data. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -23,7 +55,7 @@ const AdminDash = () => {
   }, []);
 
   return (
-    <div className="w-full bg-cover bg-center" style={{ backgroundImage: `url(${"https://wallpaperaccess.com/full/101233.jpg"})` }}>
+    <div className="w-[80%] min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${"https://wallpaperaccess.com/full/101233.jpg"})` }}>
       {loading && (
         <div className="flex justify-center items-center h-full">
           <ColorRing
@@ -35,12 +67,14 @@ const AdminDash = () => {
             wrapperClass="color-ring-wrapper"
             colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
           />
+          <p>Loading...</p>
         </div>
       )}
       {!loading && (
         <div className="mx-auto px-4 py-0 w-full h-full">
           <div className="h-full">
             <h1 className='font-extrabold'>DASHBOARD</h1>
+            {error && <p>{error}</p>}
             <table className="w-full mt-2 table-fixed">
               <thead>
                 <tr>
@@ -53,29 +87,27 @@ const AdminDash = () => {
                 </tr>
               </thead>
               <tbody>
-                {candidates !== null &&
-                  candidates.map((candidate) => (
-                    <tr key={candidate.id}>
-                      <td className="w-1/6 border px-4 py-2">{candidate.id}</td>
-                      <td className="w-2/6 border px-4 py-2">{candidate.fullName}</td>
-                      <td className="w-1/6 border px-4 py-2">{candidate.partyname}</td>
-                      <td className="w-1/6 border px-4 py-2">
-                        <img src={candidate.partylogo} width="96px" height="96px" alt="Party Logo" />
-                      </td>
-                      <td className="w-1/6 border px-4 py-2">{candidate.totalvotes}</td>
-                      <td className="w-1/6 border px-4 py-2">
-                      
-                        <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded m-2">
-                        <FaEdit />
-                        </button>
-                        <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                          <MdDelete/>
-                        </button>
-                        
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
+  {candidates !== null &&
+    candidates.map((candidate, index) => (
+      <tr key={candidate.id}>
+        <td className="w-1/6 border px-4 py-2">{index + 1}</td>
+        <td className="w-2/6 border px-4 py-2">{candidate.fullName}</td>
+        <td className="w-1/6 border px-4 py-2">{candidate.partyname}</td>
+        <td className="w-1/6 border px-4 py-2">
+          <img src={candidate.partylogo} width="96px" height="96px" alt="Party Logo" />
+        </td>
+        <td className="w-1/6 border px-4 py-2">{candidate.totalvotes}</td>
+        <td className="w-1/6 border px-4 py-2">
+          <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded m-2" onClick={() => { editCandidate(candidate.id) }}>
+            <FaEdit />
+          </button>
+          <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onClick={() => deleteCandidate(candidate.id)}>
+            <MdDelete />
+          </button>
+        </td>
+      </tr>
+    ))}
+</tbody>
             </table>
           </div>
         </div>
