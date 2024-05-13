@@ -6,7 +6,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 const LeftSidebar = () => {
     return (
-        <div className='w-[20%] mt-2 min-h-screen'>
+        <div className='w-[20%] mt-2 min-h-screen fixed top-0 left-0  bg-green-200 bg-opacity-25'>
             <div>
                 <div>
                     <img className='ml-5 ' width={"70px"} src="https://th.bing.com/th/id/OIP.RGyf_0-ICbus3P2JUlQpKQHaHa?pid=ImgDet&w=186&h=186&c=7&dpr=1.4" />
@@ -34,7 +34,7 @@ const LeftSidebar = () => {
                         <div>
                             <RiLogoutCircleRLine size={"24px"} />
                         </div>
-                        <h1 className='font-bold text-lg ml-2'><Link to="/login">Logout</Link></h1>
+                        <h1 className='font-bold text-lg ml-2'><Link to="/">Logout</Link></h1>
                     </div>
                     {/* <button className='px-4 py-2 border-none text-md bg-[#1D9BF0] rounded-full text-white w-full font-bold'>Post</button> */}
                 </div>

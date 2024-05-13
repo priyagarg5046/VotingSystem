@@ -14,7 +14,26 @@ router.get("/",verifyToken, async (req, res) => {
     console.log(data);
     res.send(data);
 })
-
+router.get("/voterDetails",verifyToken,async (req, res) => {
+    try {
+        let id=req.user.id
+        console.log(id);
+      const data = await prisma.voter.findUnique({
+        where: {
+          id: Number(id)
+        }
+      });
+      
+      if (!data) {
+        return res.status(404).send("Voter not found");
+      }
+      console.log(data);
+      res.send(data);
+    } catch (error) {
+      console.error("Error fetching voter details:", error);
+      res.status(500).send("Failed to fetch voter details. Please try again later.");
+    }
+  });
 
 router.post("/",verifyToken, async (req, res) => {
     const {candidateId} = req.body;

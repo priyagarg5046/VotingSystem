@@ -18,7 +18,7 @@ export const createJwtToken = (user: {
 }
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     // Extract token from Authorization header
-    const tokenHeader = req.headers['authorization'];
+    const tokenHeader = req.headers['authorization'] || req.cookies;
     if (!tokenHeader) {
         return res.status(401).json({ message: "Unauthorized: Missing token" });
     }

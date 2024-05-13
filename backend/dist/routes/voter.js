@@ -13,28 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const auth_1 = require("../utils/auth");
 const router = express_1.default.Router();
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-router.get("/voterDetails/", auth_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        let id = req.user.id;
-        const voter = yield prisma.voter.findUnique({
-            where: {
-                id: Number(id)
-            }
-        });
-        if (!voter) {
-            return res.status(404).send("Voter not found");
-        }
-        res.send(voter);
-    }
-    catch (error) {
-        console.error("Error fetching voter details:", error);
-        res.status(500).send("Failed to fetch voter details. Please try again later.");
-    }
-}));
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, dob, phoneNumber, aadharNo, password, nationality } = req.body;
     const voterDob = new Date(dob);

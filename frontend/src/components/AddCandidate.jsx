@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import {ColorRing} from 'react-loader-spinner';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import LeftSidebar from './LeftSidebar';
 
 const AddCandidate = () => {
   const [loading,setLoading]=useState(false);
   const inputRef=useRef("");
-
+  const navigate=useNavigate();
   const uploadFile=async (type) =>{
     const data=new FormData();
     data.append("file",inputRef.partyLogo);
@@ -38,21 +38,24 @@ const AddCandidate = () => {
       partyLogo:imageUrl,
     })
     console.log(response.data);
-    console.log("file upload success");
+    // console.log("file upload success");
     setLoading(false);
+    window.alert("Candidate added successfully!");
+    navigate("/admin");
     // inputRef.fullname="", 
     // inputRef.nationality="",
     // inputRef.dob="",
     // inputRef.partyName="", 
     // inputRef.partyLogo=""
+    
   }catch(error){
     console.log(error);
   }
  
   }
   return (
-    <div className='w-[80%] min-h-screen'>
-    <div className="bg-gray-100 min-h-screen w-full bg-cover bg-center" style={{ backgroundImage: `url(${"https://wallpapercave.com/wp/wp2488777.jpg"})` }}>
+    <div className='w-[80%] min-h-screen ml-[20%]'>
+    <div className="bg-gray-100 min-h-screen w-full bg-cover bg-center" style={{ backgroundImage: `url(${"https://th.bing.com/th/id/OIP.LqyG-GfCA2-ydFps--BxHwAAAA?w=400&h=400&rs=1&pid=ImgDetMain"})` }}>
       <div className="container mx-auto py-7">
         
         {loading && <ColorRing

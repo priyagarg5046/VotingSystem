@@ -30,7 +30,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(candidateAge);
     // console.log(nationality);
     if (nationality !== "Indian" || candidateAge <= 35) {
-        return res.send("you're not egligible");
+        return res.status(404).send("you're not egligible");
     }
     // console.log("egligible");
     else {
@@ -73,19 +73,14 @@ router.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (!candidate) {
             return res.status(404).send("Candidate not found");
         }
-        const totalVotes = candidate.votes.length;
-        const halfTotalVotes = Math.ceil(totalVotes / 2);
-        if (totalVotes < halfTotalVotes) {
-            yield prisma.candidate.delete({
-                where: {
-                    id: Number(id),
-                },
-            });
-            return res.send("Candidate deleted successfully.");
-        }
-        else {
-            return res.status(403).send("Cannot delete candidate with more than half of the total votes.");
-        }
+        // const totalVotes = candidate.votes.length;
+        // const halfTotalVotes = Math.ceil(totalVotes / 2);
+        yield prisma.candidate.delete({
+            where: {
+                id: Number(id),
+            },
+        });
+        return res.send("Candidate deleted successfully.");
     }
     catch (error) {
         console.error("Error deleting candidate:", error);

@@ -1,0 +1,138 @@
+/* style.css */
+
+.background-image {
+    background-image: url('../assets/head.avif'); /* Relative path to the image */
+    background-size: cover;
+    background-color: brown;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+    background-position: center;
+    height: 100vh; /* Set the height to 100 viewport height */
+    width: 100%;
+    position: relative;
+    opacity: 0.7;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black;
+  }
+  
+  .overlay h1 {
+    font-weight: bold;
+    transform: scale(1.1); /* Scale the text up by 10% */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 4em;
+  }
+  
+  .overlay p {
+    font-size: 1.5em;
+  }
+  
+  .bg-color {
+    background-color: #219ebc; /* Adjust the color and opacity as needed */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 30px; 
+  }
+  
+  .evote-section {
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  .evote-section h2 {
+    font-size: 44px;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+  
+  .evote-content {
+    display: flex;
+   
+  }
+  
+  .evote-image {
+    flex: 0 0 40%; /* Adjust width of the image */
+    height: 80%;
+  }
+  
+  .evote-image img {
+    width: 100%;
+  height: 100%; /* Ensure the image covers its container */
+  object-fit: cover;
+  }
+  
+  .evote-text {
+    flex: 0 0 60%; /* Adjust width of the text */
+  padding-left: 20px;
+  }
+  
+  .evote-text p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  /* how it works */
+  
+  .how-it-works-section {
+    background-color: rgb(237, 236, 236);
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .section-heading {
+    font-size: 70px;
+    font-weight: bold;
+  }
+  
+  .section-subheading {
+    font-size: 18px;
+    color: grey;
+    margin-bottom: 30px;
+  }
+  
+  .steps-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .step {
+    width: 30%;
+  }
+  
+  .step-number {
+    font-size: 30px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin: 0 auto 20px;
+  }
+  
+  .step-heading {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .step-text {
+    font-size: 16px;
+    color: grey;
+  }
+  
+  
+  
+  

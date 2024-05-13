@@ -14,7 +14,9 @@ const AdminDash = () => {
     if (window.confirm('Are you sure you want to delete this candidate?')) {
       try {
         await axios.delete(`http://localhost:4444/admin/${id}`);
-        // Update candidates after deletion
+        const response = await axios.get('http://localhost:4444/admin');
+        setCandidate(response.data);
+
       } catch (error) {
         console.error('Error deleting candidate:', error);
         setError('Failed to delete candidate. Please try again later.');
@@ -32,7 +34,7 @@ const AdminDash = () => {
         }
         return candidate;
       });
-      setCandidates(updatedCandidates);
+      // setCandidate(updatedCandidates);
       setEditingCandidateId(null); // Reset editing state
     } catch (error) {
       console.error('Error editing candidate:', error);
@@ -55,7 +57,7 @@ const AdminDash = () => {
   }, []);
 
   return (
-    <div className="w-[80%] min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${"https://wallpaperaccess.com/full/101233.jpg"})` }}>
+    <div className="w-[80%] min-h-screen bg-cover bg-center ml-[20%]" style={{ backgroundImage: `url(${"https://th.bing.com/th/id/OIP.LqyG-GfCA2-ydFps--BxHwAAAA?w=400&h=400&rs=1&pid=ImgDetMain"})` }}>
       {loading && (
         <div className="flex justify-center items-center h-full">
           <ColorRing
@@ -73,34 +75,33 @@ const AdminDash = () => {
       {!loading && (
         <div className="mx-auto px-4 py-0 w-full h-full">
           <div className="h-full">
-            <h1 className='font-extrabold'>DASHBOARD</h1>
             {error && <p>{error}</p>}
-            <table className="w-full mt-2 table-fixed">
+            <table className="w-full mt-6 table-fixed border-collapse border border-black">
               <thead>
                 <tr>
-                  <th className="w-1/6 border px-4 py-2">S.No</th>
-                  <th className="w-2/6 border px-4 py-2">Name of Candidate</th>
-                  <th className="w-1/6 border px-4 py-2">Name of Party</th>
-                  <th className="w-1/6 border px-4 py-2">Party Logo</th>
-                  <th className="w-1/6 border px-4 py-2">No of Votes</th>
-                  <th className="w-1/6 border px-4 py-2">Action</th>
+                  <th className="w-1/6 border px-4 py-2 border-black">S.No</th>
+                  <th className="w-2/6 border px-4 py-2  border-black">Name of Candidate</th>
+                  <th className="w-1/6 border px-4 py-2  border-black">Name of Party</th>
+                  <th className="w-1/6 border px-4 py-2  border-black">Party Logo</th>
+                  <th className="w-1/6 border px-4 py-2  border-black">No of Votes</th>
+                  <th className="w-1/6 border px-4 py-2  border-black">Action</th>
                 </tr>
               </thead>
               <tbody>
   {candidates !== null &&
     candidates.map((candidate, index) => (
       <tr key={candidate.id}>
-        <td className="w-1/6 border px-4 py-2">{index + 1}</td>
-        <td className="w-2/6 border px-4 py-2">{candidate.fullName}</td>
-        <td className="w-1/6 border px-4 py-2">{candidate.partyname}</td>
-        <td className="w-1/6 border px-4 py-2">
+        <td className="w-1/6 border px-4 py-2  border-black">{index + 1}</td>
+        <td className="w-2/6 border px-4 py-2  border-black">{candidate.fullName}</td>
+        <td className="w-1/6 border px-4 py-2  border-black">{candidate.partyname}</td>
+        <td className="w-1/6 border px-4 py-2  border-black">
           <img src={candidate.partylogo} width="96px" height="96px" alt="Party Logo" />
         </td>
-        <td className="w-1/6 border px-4 py-2">{candidate.totalvotes}</td>
-        <td className="w-1/6 border px-4 py-2">
-          <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded m-2" onClick={() => { editCandidate(candidate.id) }}>
+        <td className="w-1/6 border px-4 py-2  border-black">{candidate.totalvotes}</td>
+        <td className="w-1/6 border px-4 py-2  border-black">
+          {/* <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded m-2" onClick={() => { editCandidate(candidate.id) }}>
             <FaEdit />
-          </button>
+          </button> */}
           <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onClick={() => deleteCandidate(candidate.id)}>
             <MdDelete />
           </button>

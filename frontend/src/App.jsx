@@ -10,6 +10,7 @@ import VotingComponent from './components/Voting'
 import Result from './components/Result';
 import AdminDash from './components/AdminDash'
 import Voted from './components/Voted'
+import Home from './components/Home'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
     {/*<SignUp/> */}
     {/* <Admin/> */}
     <Routes>
+      <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/results" element={<Result/>}/> 
